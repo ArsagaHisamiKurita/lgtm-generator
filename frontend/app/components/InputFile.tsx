@@ -24,11 +24,11 @@ export const InputFile = () => {
 
     return (
         <div>
-            <input type="file" accept="image/*" onChange={handleFiles}></input>
+            <div className='flex justify-center'><input type="file" accept="image/*" onChange={handleFiles}></input></div>
             {images.length > 0 &&
-                <ul>
+                <ul className='grid grid-cols-3 gap-[24px] w-[1128px] mt-[24px]'>
                     {images.map((image, index) => (
-                        <li key={index}>
+                        <li key={index} className='w-[360px] h-[202px]'>
                             <Card image={image} />
                         </li>
                     ))}
