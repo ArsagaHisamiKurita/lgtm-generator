@@ -8,6 +8,9 @@ type CardProps = {
 
 export const Card = ({image} : CardProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const icons = ['😇', '🐶', '😺', '👍', '🫶', '😀', '🐭', '👶', '🙌', '🤟'];
+
     const buffer = {
         x: 12,
         y: 10,
@@ -22,6 +25,9 @@ export const Card = ({image} : CardProps) => {
 
         const img = new Image();
         img.src = image;
+
+        const rand = Math.floor( Math.random() * 11 );
+
         img.onload = () => {
             // キャンバスを初期化
             context.clearRect(0, 0, canvas.width, canvas.height);
@@ -38,7 +44,7 @@ export const Card = ({image} : CardProps) => {
             context.fillStyle = 'white';
             context.textAlign = 'center';
             context.letterSpacing = "10px";
-            context.fillText(`LGTM✌️`, canvas.width / 2 + buffer.x, canvas.height / 2 + buffer.y);
+            context.fillText(`LGTM${icons[rand]}`, canvas.width / 2 + buffer.x, canvas.height / 2 + buffer.y);
         };
     }, [image]);
 
