@@ -2,6 +2,7 @@
 
 import { useState, ChangeEventHandler } from 'react';
 import { Card } from './Card';
+import { THUMBNAIL_SIZE } from '../utils/constants';
 
 export const InputFile = () => {
     const [images, setImages] = useState<string[]>([]);
@@ -28,7 +29,7 @@ export const InputFile = () => {
             {images.length > 0 &&
                 <ul className='grid grid-cols-3 gap-[24px] w-[1128px] mt-[24px]'>
                     {images.map((image, index) => (
-                        <li key={index} className='w-[360px] h-[202px]'>
+                        <li key={index} className={`w-[${THUMBNAIL_SIZE.width}px] h-[${THUMBNAIL_SIZE.height}px]`}>
                             <Card image={image} />
                         </li>
                     ))}
