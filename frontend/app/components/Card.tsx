@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { getCoverImageSize } from '../utils/cover';
 import { THUMBNAIL_SIZE } from '../utils/constants';
+import { EMOJIS } from "../utils/constants"
 
 type CardProps = {
     image: string;
@@ -10,8 +11,6 @@ type CardProps = {
 
 export const Card = ({image} : CardProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    const icons = ['😇', '🐶', '😺', '👍', '🫶', '😀', '🐭', '👶', '🙌', '🤟'];
 
     const buffer = {
         x: 12,
@@ -30,7 +29,7 @@ export const Card = ({image} : CardProps) => {
 
         const rand = Math.floor( Math.random() * 11 );
 
-        img.onload = () => {
+        img.onload = async () => {
             // Retina対応
             canvas.width = THUMBNAIL_SIZE.width * 2;
             canvas.height = THUMBNAIL_SIZE.height * 2;
@@ -50,9 +49,23 @@ export const Card = ({image} : CardProps) => {
             context.fillStyle = 'white';
             context.textAlign = 'center';
             context.letterSpacing = "10px";
-            context.fillText(`LGTM${icons[rand]}`, canvas.width / 2 + buffer.x, canvas.height / 2 + buffer.y);
+            context.fillText(`LGTM${EMOJIS[rand]}`, canvas.width / 2 + buffer.x, canvas.height / 2 + buffer.y);
 
             context.scale(0.5, 0.5);
+
+            const base64 = canvas.toDataURL('image/jpeg');
+            console.log(base64);
+
+            // POST送信
+            const res = await fetch(process.env.NEXT_PUBLIC_API_URL || '', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    image_url: base64,
+                }),
+            });
         };
     }, [image]);
 

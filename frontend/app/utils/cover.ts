@@ -18,7 +18,6 @@ export const getCoverImageSize = (image : Image) => {
       height = THUMBNAIL_SIZE.width * imageRatio;
       offsetX = 0;
       offsetY = (THUMBNAIL_SIZE.height - height) / 2;
-      console.log('test');
     } else {
       width = THUMBNAIL_SIZE.height / imageRatio;
       height = THUMBNAIL_SIZE.height;
