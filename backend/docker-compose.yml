@@ -3,6 +3,7 @@ name: lgtm-generator
 
 services:
   app:
+    container_name: lgtm-generator-app
     build:
       context: .
       dockerfile: ./.docker/app/Dockerfile
@@ -12,6 +13,7 @@ services:
     #   - "9090:9090"
 
   web:
+    container_name: lgtm-generator-web
     build:
       context: .
       dockerfile: ./.docker/web/Dockerfile
@@ -24,6 +26,7 @@ services:
       - ../:/app
 
   db:
+    container_name: lgtm-generator-db
     platform: linux/x86_64 # m1 mac でのエラー対策
     build:
       context: .
@@ -39,13 +42,16 @@ services:
     volumes:
       - /var/lib/docker/volumes/
 
-  # mailhog:
-  #   image: mailhog/mailhog
-  #   ports:
-  #     - target: 8025
-  #       published: ${MAILHOG_PUBLISHED_PORT:-8025}
-  #       protocol: tcp
-  #       mode: host
+  minio:
+    container_name: lgtm-generator-minio
+    image: minio/minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ROOT_USER: "miniouser"
+      MINIO_ROOT_PASSWORD: "miniopassword"
+    command: server /data --console-address ":9001"
+    volumes:
+      - ./.docker/minio/data:/data
 
-volumes:
-   mysql-volume:
