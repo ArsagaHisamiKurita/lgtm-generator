@@ -4,24 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
     public function upload(Request $request)
     {
-        // // リクエストからファイルを取得
-        // $base64 = $request->file('image');
+        try{
+            // リクエストからファイルを取得
+            $base64 = $request->get('image');
 
-        // // BASE64データをデコードしてファイル形式に変換
-        // $formatData = base64_decode($base64);
-        // error_log($formatData);
+            // "data:{拡張子}"と"base64,"で区切る
+            list($fileInfo, $fileData) = explode(';', $base64);
 
-        $localImagePath = storage_path('app/public/test.jpg');
-        $file = new \Illuminate\Http\File($localImagePath);
+            // 拡張子を取得
+            $extension = explode('/', $fileInfo)[1];
 
-        // ファイルをS3に保存
-        $path = Storage::disk('s3')->putFile('/', $file, 'public');
+            // $fileDataにある"base64,"を削除する
+            list(, $fileData) = explode(',', $fileData);
 
-        return response()->json($path);
+            // base64をデコード
+            $fileData = base64_decode($fileData);
+
+            // ランダムなファイル名生成
+            $fileName = md5(uniqid(rand(), true)). ".$extension";
+
+            // S3 に保存する
+            Storage::disk('s3')->put($fileName, $fileData, 'public');
+
+            // データベースに保存するためのパスを返す
+            return response()->json([
+                'message' => 'Successfully uploaded image!',
+                'image_url' => Storage::disk('s3')->url($fileName)
+            ], 201);
+        }
+        catch(\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
