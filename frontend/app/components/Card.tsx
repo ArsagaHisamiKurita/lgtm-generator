@@ -30,6 +30,7 @@ export const Card = ({image} : CardProps) => {
         const rand = Math.floor( Math.random() * 11 );
 
         img.onload = async () => {
+
             // Retina対応
             canvas.width = THUMBNAIL_SIZE.width * 2;
             canvas.height = THUMBNAIL_SIZE.height * 2;
@@ -57,15 +58,17 @@ export const Card = ({image} : CardProps) => {
             console.log(base64);
 
             // POST送信
-            const res = await fetch(process.env.NEXT_PUBLIC_API_URL || '', {
+            const res = await fetch(process.env.NEXT_PUBLIC_API_UPLOAD || '', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    image_url: base64,
+                    image: base64,
                 }),
             });
+            const data = await res.json();
+            console.log(data);
         };
     }, [image]);
 

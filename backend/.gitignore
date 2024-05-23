@@ -20,3 +20,4 @@ yarn-error.log
 /.vscode
 
 .docker/minio/data/.minio.sys/*
+.docker/minio/data/lgtm-generator/*

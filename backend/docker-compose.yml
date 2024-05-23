@@ -34,10 +34,10 @@ services:
     ports:
       - 3306:3306
     environment:
+      MYSQL_DATABASE: lgtm-generator
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
       TZ: 'Asia/Tokyo'
     volumes:
       - /var/lib/docker/volumes/
@@ -55,3 +55,5 @@ services:
     volumes:
       - ./.docker/minio/data:/data
 
+# volumes:
+#    mysql-volume:

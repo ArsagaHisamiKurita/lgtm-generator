@@ -12,7 +12,7 @@ const Index = () => {
 
   // 一覧取得
   const getData = async () => {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL || '');
+    const res = await fetch(process.env.NEXT_PUBLIC_API_IMAGES || '');
     const data = await res.json();
     setData(data);
     console.log(data);
@@ -40,7 +40,7 @@ const Index = () => {
     <main className="min-h-screen w-[1128px] m-auto py-[40px]">
       <h1 className='text-[48px] text-center font-bold font-arial'>LGTM Generator {EMOJIS[emojiIndex]}</h1>
       <p className="mt-[24px] text-center">この LGTM Generator はシンプルな操作で素早くLGTM（Looks Good To Me）画像を生成できる便利なツールです。<br />手間なく高品質な画像を作成し、コミュニケーションをもっと楽しくスムーズに。{outputEmojis()}</p>
-      <nav className="w-full">
+      <nav className="w-full mt-[24px]">
         <ul className="grid grid-cols-3">
           <li><a href="">NEW !!!</a></li>
           <li><a href="">CREATE !!!</a></li>
@@ -49,7 +49,7 @@ const Index = () => {
       </nav>
       <div className='mt-[24px]'><InputFile /></div>
       {data && (
-        <ul className='grid grid-cols-3 gap-[24px]'>
+        <ul className='grid grid-cols-3 gap-[24px] mt-[24px]'>
           {data.map((image, index) => (
             <li key={index} className={`w-[${THUMBNAIL_SIZE.width}px] h-[${THUMBNAIL_SIZE.height}px]`}>
               <img src={image.image_url} width={THUMBNAIL_SIZE.width} height={THUMBNAIL_SIZE.height} />
