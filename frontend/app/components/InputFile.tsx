@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, ChangeEventHandler } from 'react';
-import { Card } from './Card';
+import { CardPreview } from './CardPreview';
 import { THUMBNAIL_SIZE } from '../utils/constants';
 
 export const InputFile = () => {
@@ -19,6 +19,7 @@ export const InputFile = () => {
         reader.onload = (e) => {
             if(!e.target) return
             
+            console.log(e.target.result);
             setImages([...images, e.target.result as string]);
         }
       };
@@ -30,7 +31,7 @@ export const InputFile = () => {
                 <ul className='grid grid-cols-3 gap-[24px] w-[1128px] mt-[24px]'>
                     {images.map((image, index) => (
                         <li key={index} className={`w-[${THUMBNAIL_SIZE.width}px] h-[${THUMBNAIL_SIZE.height}px]`}>
-                            <Card image={image} />
+                            <CardPreview image={image} />
                         </li>
                     ))}
                 </ul>

@@ -5,17 +5,19 @@ import { getCoverImageSize } from '../utils/cover';
 import { THUMBNAIL_SIZE } from '../utils/constants';
 import { EMOJIS } from "../utils/constants"
 
-type CardProps = {
+type CardPreviewProps = {
     image: string;
 };
 
-export const Card = ({image} : CardProps) => {
+export const CardPreview = ({image} : CardPreviewProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const buffer = {
         x: 12,
         y: 24,
     }
+
+    let disabled = false;
 
     useEffect(() => {
         const canvas = canvasRef.current;

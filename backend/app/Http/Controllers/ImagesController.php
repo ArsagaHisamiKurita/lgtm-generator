@@ -9,7 +9,12 @@ class ImagesController extends Controller
 {
     public function index()
     {
-        return response()->json(Images::all());
+        $images = Images::all();
+        $images->map(function($image) {
+            $image->image_url = 'http://127.0.0.1:9000/lgtm-generator/' . $image->image_url;
+        });
+
+        return response()->json($images);
     }
 
     public function store(Request $request)

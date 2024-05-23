@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use App\Models\Images;
 
 class FileController extends Controller
 {
@@ -31,6 +31,11 @@ class FileController extends Controller
 
             // S3 に保存する
             Storage::disk('s3')->put($fileName, $fileData, 'public');
+
+            // データベースに保存
+            Images::create([
+                'image_url' => $fileName,
+            ]);
 
             // データベースに保存するためのパスを返す
             return response()->json([
