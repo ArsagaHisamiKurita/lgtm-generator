@@ -1,15 +1,15 @@
 "use client";
 
-import { Header } from "../components/Header";
 import { InputFile } from '../components/InputFile';
+import { useUuid } from "../hooks/useUuid";
 
 const Create = () => {
-  return (
-    <main className="min-h-screen w-[1128px] m-auto py-[40px]">
-      <Header />
-      <div className='mt-[24px]'><InputFile /></div>
-    </main>
-  );
+    // ユーザーIDをセット
+    useUuid()
+
+    return (
+        <div className='mt-[24px]'><InputFile /></div>
+    );
 }
 
 export default Create;

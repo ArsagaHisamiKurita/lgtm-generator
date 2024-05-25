@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Favorite extends Model
 {
     use HasFactory;
 
-    protected $table = 'user';
+    protected $table = 'favorite';
 
     protected $fillable = [
         'user_id',
+        'image_id',
     ];
 
     protected $guarded = [

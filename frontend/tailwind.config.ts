@@ -15,9 +15,19 @@ const config: Config = {
       },
       fontFamily: {
         'arial': ['Arial', 'sans-serif'],
-      }
+        'sans': ['var(--font-noto-sans-jp)'],
+        'sans-emoji': ['var(--font-noto-color-emoji)'],
+        'poppins': ['var(--font-poppins)'],
+      },
+      keyframes: {
+        emoji: {
+          '0%': { transform: 'translateY(10vh)' },
+          '100%': { transform: 'translateY(-100vh)' },
+        }
+      },
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 };
 export default config;

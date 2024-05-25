@@ -1,6 +1,40 @@
-export const ButtonFavorite = () => {
+"use client";
+
+import { useState, useEffect } from "react";
+import { setCookie, parseCookies } from 'nookies';
+
+type ButtonFavoriteProps = {
+    image_id: Number;
+}
+
+export const ButtonFavorite = ({ image_id } : ButtonFavoriteProps) => {
+    const cookies = parseCookies();
+    const [favorite, setFavorite] = useState(false);
+
+    const postData = async () => {
+        // ユーザーIDと画像IDを送信
+        const res = await fetch(process.env.NEXT_PUBLIC_API_FAVORITE || '', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: cookies.uuid,
+                image_id: image_id,
+            }),
+        })
+        const data = await res.json();
+        console.log(data);
+    }
+
+    const handleClick = () => {
+        const isFavorite = !favorite;
+        setFavorite(isFavorite);
+        postData()      
+    }
+
     return (
-        <button className="flex justify-center items-center bg-white w-full h-full border-[2px] border-gray-500">
+        <button onClick={handleClick} className={`flex justify-center items-center w-full h-full border-[2px] rounded-lg ${favorite ? 'border-yellow-300' : 'border-white'}`}>
             <svg viewBox="0 0 512 512" className="relative top-[-1px] w-[19px] h-[19px]">
                 <path d="M512,209.015c0-4.653-0.716-9.372-2.19-13.952l-0.008-0.014c-6.077-18.85-23.6-31.616-43.403-31.623H338.382
                     l-38.97-121.336c-6.062-18.858-23.59-31.652-43.41-31.659c-19.835,0.007-37.352,12.801-43.414,31.652l19.706,6.336l-19.706-6.329
@@ -17,7 +51,7 @@ export const ButtonFavorite = () => {
                     l-0.007-0.007c-1.119-0.784-1.744-2.071-1.752-3.409l0.201-1.273c0.558-1.748,2.194-2.927,4.006-2.92H188.71
                     c9.001,0,16.955-5.804,19.706-14.377L252,54.74c0.553-1.734,2.19-2.92,4.002-2.912c1.805-0.008,3.445,1.179,4.002,2.919
                     l43.579,135.698c2.748,8.573,10.706,14.377,19.706,14.377h143.11c1.812-0.007,3.448,1.172,4.002,2.92l0.202,1.273
-                    C470.596,210.353,469.977,211.633,468.852,212.431z" className="fill-gray-500"></path>
+                    C470.596,210.353,469.977,211.633,468.852,212.431z" className={favorite ? 'fill-yellow-300' : 'fill-white'}></path>
             </svg>
         </button>
     );

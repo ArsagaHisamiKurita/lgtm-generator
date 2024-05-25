@@ -9,7 +9,8 @@ class ImagesController extends Controller
 {
     public function index()
     {
-        $images = Images::all();
+        // DBから全データを取得する時に反転させる
+        $images = Images::orderBy('id', 'desc')->get();
         $images->map(function($image) {
             $image->image_url = 'http://127.0.0.1:9000/lgtm-generator/' . $image->image_url;
         });

@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Header } from "./components/Header";
 import { CardThumbnail } from "./components/CardThumbnail";
 import { THUMBNAIL_SIZE } from './utils/constants';
+import { useUuid } from "./hooks/useUuid";
 
 const Index = () => {
+  // ユーザーIDをセット
+  useUuid()
+
   const [data, setData] = useState("");
 
   // 一覧取得
@@ -21,8 +24,7 @@ const Index = () => {
   }, []); 
 
   return (
-    <main className="min-h-screen w-[1128px] m-auto py-[40px]">
-      <Header />
+    <div>
       {data && (
         <ul className='grid grid-cols-3 gap-[24px] mt-[60px]'>
           {data.map((image, index) => (
@@ -32,7 +34,7 @@ const Index = () => {
           ))}
         </ul>
       )}
-    </main>
+    </div>
   );
 }
 
