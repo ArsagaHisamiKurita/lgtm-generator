@@ -13,11 +13,8 @@ type ButtonFavoriteProps = {
 export const ButtonFavorite = ({ image_id, is_favorite } : ButtonFavoriteProps) => {
     const cookies = parseCookies();
     const [isFavorite, setIsFavorite] = useAtom(IS_FAVORITE);
-    const [favorite, setFavorite] = useState(false);
-
-    useEffect(() => {
-        setFavorite(is_favorite);
-    }, []);
+    const [favorite, setFavorite] = useState(is_favorite);
+    const [disable, setDisable] = useState(false);
 
     const postData = async () => {
         // ユーザーIDと画像IDを送信
@@ -36,14 +33,18 @@ export const ButtonFavorite = ({ image_id, is_favorite } : ButtonFavoriteProps) 
     }
 
     const handleClick = () => {
-        if(isFavorite) return;
+        if(disable) return;
+        console.log('click');
 
-        setIsFavorite(true);
+        setDisable(true)
+
+        if(!favorite) setIsFavorite(true);
         setFavorite(!favorite);
         postData()
         
         setTimeout(() => {
-            setIsFavorite(false);
+            setDisable(false)
+            if(!favorite) setIsFavorite(false);
         }, 1000);
     }
 
