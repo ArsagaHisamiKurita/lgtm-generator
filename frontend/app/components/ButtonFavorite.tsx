@@ -7,12 +7,17 @@ import { IS_FAVORITE } from "../jotai/atom";
 
 type ButtonFavoriteProps = {
     image_id: Number;
+    is_favorite: Boolean;
 }
 
-export const ButtonFavorite = ({ image_id } : ButtonFavoriteProps) => {
+export const ButtonFavorite = ({ image_id, is_favorite } : ButtonFavoriteProps) => {
     const cookies = parseCookies();
     const [isFavorite, setIsFavorite] = useAtom(IS_FAVORITE);
     const [favorite, setFavorite] = useState(false);
+
+    useEffect(() => {
+        setFavorite(is_favorite);
+    }, []);
 
     const postData = async () => {
         // ユーザーIDと画像IDを送信

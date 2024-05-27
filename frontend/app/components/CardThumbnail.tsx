@@ -7,6 +7,7 @@ type CardThumbnailProps = {
     image: {
         id: Number;
         image_url: string;
+        is_favorite: boolean;
     };
 };
 
@@ -22,7 +23,7 @@ export const CardThumbnail = ({image} : CardThumbnailProps) => {
                     <ButtonDownload image_url={image.image_url} />
                 </span>
                 <span className='w-[34px] h-[34px]'>
-                    <ButtonFavorite image_id={image.id} />
+                    <ButtonFavorite image_id={image.id} is_favorite={image.is_favorite} />
                 </span>
             </div>
         </div>
