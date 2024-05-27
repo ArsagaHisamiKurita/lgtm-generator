@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { setCookie, parseCookies } from 'nookies';
+import { useAtom } from "jotai";
+import { IS_FAVORITE } from "../jotai/atom";
 
 type ButtonFavoriteProps = {
     image_id: Number;
@@ -9,6 +11,7 @@ type ButtonFavoriteProps = {
 
 export const ButtonFavorite = ({ image_id } : ButtonFavoriteProps) => {
     const cookies = parseCookies();
+    const [isFavorite, setIsFavorite] = useAtom(IS_FAVORITE);
     const [favorite, setFavorite] = useState(false);
 
     const postData = async () => {
@@ -28,9 +31,15 @@ export const ButtonFavorite = ({ image_id } : ButtonFavoriteProps) => {
     }
 
     const handleClick = () => {
-        const isFavorite = !favorite;
-        setFavorite(isFavorite);
-        postData()      
+        if(isFavorite) return;
+
+        setIsFavorite(true);
+        setFavorite(!favorite);
+        postData()
+        
+        setTimeout(() => {
+            setIsFavorite(false);
+        }, 1000);
     }
 
     return (

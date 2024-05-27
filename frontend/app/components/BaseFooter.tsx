@@ -20,7 +20,7 @@ export const BaseFooter = () => {
                     <ul className="flex items-center gap-[18px]">
                         <li><a href={URL_PRIVACY} className="border-b-[1px]">Privacy Policy</a></li>
                         <li><a href={URL_NOTICE} className="border-b-[1px]">Precautions For Use</a></li>
-                        <li><a href={URL_NOTICE} className="border-b-[1px]">Contact</a></li>
+                        <li><a href="https://forms.gle/9sQ7AVV3J3XurMDp6" target="_blank" rel="noopener noreferrer" className="border-b-[1px]">Contact</a></li>
                         <li>
                             <a href="https://github.com/hisamikurita" target="_blank" rel="noopener noreferrer" className="flex h-[26px] w-[26px]">
                                 <svg aria-label="Githubを新規タブで開きます" viewBox="0 0 16 16" width="16" height="16" className="h-full w-full">
@@ -28,13 +28,6 @@ export const BaseFooter = () => {
                                 </svg>
                             </a>
                         </li>
-                        {/* <li>
-                            <a href="https://twitter.com/kurichans_1996" target="_blank" rel="noopener noreferrer" className="flex h-[27px] w-[27px]">
-                                <svg aria-label="Xを新規タブで開きます" viewBox="0 0 24 24" width="24" height="24" className="h-full w-full">
-                                    <path d="M14.258 10.152L23.176 0h-2.113l-7.747 8.813L7.133 0H0l9.352 13.328L0 23.973h2.113l8.176-9.309 6.531 9.309h7.133zm-2.895 3.293l-.949-1.328L2.875 1.56h3.246l6.086 8.523.945 1.328 7.91 11.078h-3.246zm0 0" />
-                                </svg>
-                            </a>
-                        </li> */}
                     </ul>
                 </div>
             </div>

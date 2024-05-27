@@ -3,21 +3,26 @@
 import { useRef, useEffect } from 'react';
 import { getCoverImageSize } from '../utils/cover';
 import { THUMBNAIL_SIZE } from '../utils/constants';
-import { EMOJIS } from "../utils/constants"
+import { EMOJIS } from "../utils/constants";
+import { useAtom } from 'jotai';
+import { IS_UPLOAD, IS_CHANGE, GENERATE_DATA } from '../jotai/atom';
 
 type CardPreviewProps = {
     image: string;
 };
 
 export const CardPreview = ({image} : CardPreviewProps) => {
+    const [change] = useAtom(IS_CHANGE);
+    const [generate, setGenerate] = useAtom(GENERATE_DATA);
+    const [upload, setUpload] = useAtom(IS_UPLOAD);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const saveIndexRef = useRef<number>(0);
 
     const buffer = {
         x: 12,
         y: 24,
     }
-
-    let disabled = false;
+    let randIndex = 0;
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -29,7 +34,12 @@ export const CardPreview = ({image} : CardPreviewProps) => {
         const img = new Image();
         img.src = image;
 
-        const rand = Math.floor( Math.random() * 11 );
+        // 前回でた絵文字と同じ場合は再度ランダムを取得
+        do {
+            randIndex = Math.floor(Math.random() * EMOJIS.length);
+        } while (randIndex === saveIndexRef.current);
+
+        saveIndexRef.current = randIndex;
 
         img.onload = async () => {
 
@@ -52,27 +62,17 @@ export const CardPreview = ({image} : CardPreviewProps) => {
             context.fillStyle = 'white';
             context.textAlign = 'center';
             context.letterSpacing = "10px";
-            context.fillText(`LGTM${EMOJIS[rand]}`, canvas.width / 2 + buffer.x, canvas.height / 2 + buffer.y);
+            context.fillText(`LGTM${EMOJIS[randIndex]}`, canvas.width / 2 + buffer.x, canvas.height / 2 + buffer.y);
 
             context.scale(0.5, 0.5);
 
             const base64 = canvas.toDataURL('image/jpeg');
             console.log(base64);
 
-            // POST送信
-            const res = await fetch(process.env.NEXT_PUBLIC_API_UPLOAD || '', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    image: base64,
-                }),
-            });
-            const data = await res.json();
-            console.log(data);
+            setUpload(true)
+            setGenerate(base64)
         };
-    }, [image]);
+    }, [image, change]);
 
     return (
         <canvas ref={canvasRef} style={{width: THUMBNAIL_SIZE.width, height: THUMBNAIL_SIZE.height}} />

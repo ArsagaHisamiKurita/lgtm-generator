@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Images;
 
-class FileController extends Controller
+class UploadController extends Controller
 {
     public function upload(Request $request)
     {

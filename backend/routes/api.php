@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ImagesController;
-use App\Http\Controllers\FileController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
@@ -11,8 +11,8 @@ Route::get('/images', [ImagesController::class, 'index']);
 Route::post('/images', [ImagesController::class, 'store']);
 
 // 画像アップロード
-Route::get('/upload', [FileController::class, 'upload']);
-Route::post('/upload', [FileController::class, 'upload']);
+Route::get('/upload', [UploadController::class, 'upload']);
+Route::post('/upload', [UploadController::class, 'upload']);
 
 // ユーザー
 Route::get('/user', [UserController::class, 'store']);

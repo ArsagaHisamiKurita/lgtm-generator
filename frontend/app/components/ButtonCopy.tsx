@@ -1,18 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAtom } from "jotai";
+import { IS_COPY } from "../jotai/atom";
 
 type ButtonCopyProps = {
     image_url: string;
 };
 
 export const ButtonCopy = ({image_url} : ButtonCopyProps) => {
+    const [isCopy, setIsCopy] = useAtom(IS_COPY);
     const [copy, setCopy] = useState(false);
 
     const handleClick = async () => {
+        if(isCopy) return;
+
         navigator.clipboard.writeText(`![LGTM](${image_url})`);
 
         setCopy(true);
+        setIsCopy(true);
+
+        setTimeout(() => {
+            setIsCopy(false);
+        }, 1000);
     }
 
     return (

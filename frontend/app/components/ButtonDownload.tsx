@@ -1,10 +1,14 @@
 "use client";
 
+import { useAtom } from "jotai";
+import { IS_DOWNLOAD } from "../jotai/atom";
+
 type ButtonDownloadProps = {
     image_url: string;
 };
 
 export const ButtonDownload = ({image_url} : ButtonDownloadProps) => {
+    const [, setDownload] = useAtom(IS_DOWNLOAD);
 
     // 画像は別サーバーのストレージに保存されているため、ダウンロードする際にはfetchを使ってバイナリデータを取得させる
     const handleClick = async () => {
@@ -17,8 +21,16 @@ export const ButtonDownload = ({image_url} : ButtonDownloadProps) => {
         a.click();
     }
 
+    const handleMouseEnter = () => {
+        setDownload(true);
+    }
+
+    const handleMouseLeave = () => {
+        setDownload(false);
+    }
+
     return (
-        <button onClick={handleClick} className="flex justify-center items-center w-full h-full text-white rounded-lg hover:text-green-400 border-[2px] border-white hover:border-green-400">
+        <button onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick} className="flex justify-center items-center w-full h-full text-white rounded-lg hover:text-green-400 border-[2px] border-white hover:border-green-400">
            <svg viewBox="0 0 512 512" className="w-[19px] h-[19px]">
                 <path d="M243.591,309.362c3.272,4.317,7.678,6.692,12.409,6.692c4.73,0,9.136-2.376,12.409-6.689l89.594-118.094
                     c3.348-4.414,4.274-8.692,2.611-12.042c-1.666-3.35-5.631-5.198-11.168-5.198H315.14c-9.288,0-16.844-7.554-16.844-16.84V59.777
