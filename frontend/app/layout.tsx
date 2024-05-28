@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP, Noto_Color_Emoji, Poppins } from "next/font/google";
 import { BaseHeader } from "./components/BaseHeader";
 import { BaseFooter } from "./components/BaseFooter";
-import { FIX_EMOJI } from "./utils/constants";
+import { FIX_EMOJI, TITLE, DESCRIPTION } from "./utils/constants";
 import { useAtom } from "jotai";
 import { Cursor } from "./components/Cursor";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
@@ -27,8 +27,8 @@ const notoColorEmoji = Noto_Color_Emoji({
 })
 
 export const metadata: Metadata = {
-  title: "LGTM GENERATOR WITH EMOJI",
-  description: "LGTM GENERATOR WITH EMOJIはシンプルな操作で素早くLGTM（Looks Good To Me）画像を生成できる便利なツールです。手間なく高品質な画像を作成し、コミュニケーションをもっと楽しくスムーズに。"
+  title: TITLE,
+  description: DESCRIPTION,
 }
 
 const RootLayout = ({

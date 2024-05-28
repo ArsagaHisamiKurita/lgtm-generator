@@ -8,6 +8,7 @@ use App\Services\ImagesService;
 use App\Services\UserService;
 use App\ViewModels\ImagesViewModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ImagesController extends Controller
@@ -28,6 +29,10 @@ class ImagesController extends Controller
         $ivm = ImagesViewModel::collect($allImages, $favoriteImages);
 
         return response()->json($ivm->toArray(), 201);
+
+        // TEST
+        // $images = DB::table('images')->paginate(5);
+        // return response()->json($images->items(), 201);
     }
 
     public function store(Request $request)
